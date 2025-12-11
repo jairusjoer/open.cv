@@ -1,1 +1,14 @@
 @import 'tailwindcss';
+@import './tailwind/base.css';
+@import './tailwind/utilities.css';
+
+/* Choose one theme or create your own. */
+
+/* @import './themes/aggregata.css'; */
+/* @import './themes/catppuccin.css'; */
+@import './themes/read.css';
+
+@import './custom.css';
+
+@plugin '@tailwindcss/typography';
+@source inline("sr-only");

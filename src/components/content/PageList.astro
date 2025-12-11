@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import PageListItem from './PageListItem.astro';
+
+export interface Props {
+  filter?: string;
+}
+
+const { filter } = Astro.props;
+let collection = await getCollection('pages', ({ id }) => {
+  if (id.endsWith('index')) return false;
+
+  return filter ? id.startsWith(filter.toLowerCase()) : true;
+});
+
+collection = collection.sort((a, b) => {
+  const dateA = Array.isArray(a.data?.date) ? a.data.date[0] : a.data?.date;
+  const dateB = Array.isArray(b.data?.date) ? b.data.date[0] : b.data?.date;
+
+  if (!dateA && !dateB) return 0;
+  if (!dateA) return 1;
+  if (!dateB) return -1;
+
+  return new Date(dateB).getTime() - new Date(dateA).getTime();
+});
+
+if (import.meta.env.PROD) {
+  collection = collection.filter((entry) => !entry.data?.draft);
+}
+---
+
+<div>
+  {collection.map((entry) => <PageListItem id={entry.id} />)}
+</div>

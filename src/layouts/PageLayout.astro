@@ -1,0 +1,36 @@
+---
+import '@styles/tailwind.css';
+import Metadata from '@components/layout/PageMeta.astro';
+import type { Metadata as MetadataType } from '@components/layout/PageMeta.astro';
+import { site } from '../config';
+import PageHeader from '@components/layout/PageHeader.astro';
+import PageFooter from '@components/layout/PageFooter.astro';
+
+export interface Props {
+  metadata?: Partial<MetadataType>;
+}
+
+const { metadata } = Astro.props;
+---
+
+<html
+  class="bg-background text-foreground-subtle print:bg-transparent print:scheme-light"
+  lang={site.locale.slice(0, 2)}
+>
+  <head>
+    <Metadata metadata={{ ...site, ...metadata }} />
+    <slot name="head" />
+  </head>
+  <body>
+    <div
+      id="root"
+      class="text-default font-default isolate px-[1.5em]"
+    >
+      <div class="max-w-default mx-auto print:ml-0 flex min-h-screen w-full flex-col items-start py-[4.5em]">
+        <PageHeader />
+        <slot />
+        <PageFooter links={site.footer} />
+      </div>
+    </div>
+  </body>
+</html>

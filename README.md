@@ -1,48 +1,70 @@
-# Astro Starter Kit: Basics
+# open.cv
 
-```sh
-npm create astro@latest -- --template basics
+**open.cv** is a document-driven static site theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/), crafted for clarity and purpose.
+
+With a deliberately minimal design, this theme ensures your work remains the focal point. It offers a robust yet flexible foundation for your personal website, portfolio, or blog — honoring a clean aesthetic without sacrificing customization.
+
+## Features
+
+- **Document-Driven**: Write in Markdown, MDX, or Markdoc
+- **Theming**: Built-in themes and customization via CSS variables
+- **Print Friendly**: Optimized appearance for web to print
+- **Feed & Sitemap**: Automatic feed and sitemap generation
+- **Type Safe**: Fully typed configuration and content collections
+
+## Getting Started
+
+To help you get started, here are the essential commands you'll need to develop, build, and maintain your site. These scripts are defined in your `package.json` and streamline your workflow.
+
+| Command            | Description                                       |
+| :----------------- | :------------------------------------------------ |
+| `pnpm dev`         | Start the development server                      |
+| `pnpm build`       | Build the site for production                     |
+| `pnpm preview`     | Preview the built site                            |
+| `pnpm check-types` | Check TypeScript types                            |
+| `pnpm format`      | Format code with [Prettier](https://prettier.io/) |
+| `pnpm lint`        | Lint code with [ESLint](https://eslint.org/)      |
+
+## Configuration
+
+The main site configuration is located in `src/config.ts`. This file exports a `site` object that adheres to the `SiteConfig` interface, ensuring type safety and autocompletion.
+
+```typescript
+export const site: SiteConfig = {
+  site: 'https://your-site.com',
+  title: 'open.cv',
+  description: 'Document-driven static site theme',
+  locale: 'en-US',
+  datetime: {
+    month: 'short',
+    year: 'numeric',
+  },
+  // ...
+};
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Content Management
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Content is the heart of your site. All your pages and posts are stored in `src/content/**`. The theme supports standard Markdown (`.md`), MDX (`.mdx`), and Markdoc (`.mdoc`), giving you the flexibility to write in the format you prefer.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+### Components
 
-## 🚀 Project Structure
+To make your content more dynamic, the theme includes a set of custom components:
 
-Inside of your Astro project, you'll see the following folders and files:
+- `<PageList />`: Display a list of pages from your content collection
+- `<PageListItem />`: Embed a specific page entry individually
+- `<InlineOnly />` & `<PageOnly />`: Control content visibility based on context
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+## Theming
+
+Your site should reflect your personality. open.cv makes it easy to customize the look and feel of your site through a powerful theming system based on CSS variables.
+
+Switching between themes is as simple as changing a single line in `src/styles/tailwind.css`.
+
+```css
+/* src/styles/tailwind.css */
+
+/* @import './themes/aggregata.css'; */
+@import './themes/catppuccin.css';
+/* @import './themes/read.css'; */
 ```
-
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

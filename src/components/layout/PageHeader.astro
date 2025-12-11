@@ -1,0 +1,35 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../../config';
+import PageLink from '../ui/PageLink.astro';
+import { getEntry } from 'astro:content';
+import PageNavigation from './PageNavigation.astro';
+
+const index = await getEntry('pages', 'index');
+---
+
+<header class="space-y-[2.25em]">
+  <div class="relative flex items-start gap-[1em]">
+    {
+      site?.image && (
+        <Image
+          class="rounded-default size-[3em]"
+          src={site.image}
+          alt="Portrait"
+          width={160}
+          height={160}
+          format="avif"
+          loading="eager"
+        />
+      )
+    }
+    <div>
+      <p class="text-foreground font-semibold">{site.title}</p>
+      {site?.description && <p>{site.description}</p>}
+    </div>
+
+    {index && <PageLink entry={index} />}
+  </div>
+
+  {site?.navigation?.length && <PageNavigation links={site.navigation} />}
+</header>

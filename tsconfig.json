@@ -4,11 +4,11 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "paths": {
+      "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
       "@layouts/*": ["./src/layouts/*"],
       "@pages/*": ["./src/pages/*"],
-      "@routes/*": ["./src/routes/*"],
-      "@services/*": ["./src/services/*"],
+      "@scripts/*": ["./src/scripts/*"],
       "@sources/*": ["./src/sources/*"],
       "@styles/*": ["./src/styles/*"]
     }

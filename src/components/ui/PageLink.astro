@@ -1,0 +1,17 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+export interface Props {
+  entry: CollectionEntry<'pages'>;
+}
+
+const { entry } = Astro.props;
+const href = `/${entry.id === 'index' ? '' : entry.id}`;
+---
+
+<a
+  class="touch-hitbox absolute inset-0"
+  href={href}
+  title={entry.data.title}
+  aria-label={entry.data.title}
+></a>

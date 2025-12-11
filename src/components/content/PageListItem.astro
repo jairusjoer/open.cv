@@ -1,0 +1,89 @@
+---
+import PageLink from '@components/ui/PageLink.astro';
+import { ChevronRight, CircleSmall, FileText, SquareArrowOutUpRight } from '@lucide/astro';
+import { formatDatetime } from '@scripts/formatDatetime';
+import { getComponents } from '@scripts/getComponents';
+import type { AnyEntryMap } from 'astro:content';
+import { getEntry } from 'astro:content';
+import { render } from 'astro:content';
+
+export interface Props {
+  id: keyof AnyEntryMap['pages'];
+  inline?: 'also' | 'only';
+}
+
+const props = Astro.props;
+const entry = await getEntry('pages', props.id);
+
+if (!entry) {
+  throw new Error(`Entry with id "${props.id}" not found in collection "pages"`);
+}
+
+const { Content } = await render(entry);
+const components = getComponents();
+
+const inline = entry.body && (props.inline ?? entry.data?.inline);
+const inlineAlso = inline === 'also';
+
+const DetailsElement = inline ? 'details' : 'div';
+const SummaryElement = inline ? 'summary' : 'header';
+const Icon = inline ? ChevronRight : !inline && entry.body ? FileText : CircleSmall;
+
+const href = `/${entry.id === 'index' ? '' : entry.id}`;
+---
+
+<article class="relative [&+&]:mt-[1.25em]">
+  <DetailsElement class="group rounded-default flex break-inside-avoid flex-col">
+    <SummaryElement
+      class="bg-background touch-hitbox not-prose flex cursor-pointer gap-[0.5em] select-none print:bg-transparent"
+    >
+      <Icon
+        class="text-accent mt-[0.375em] shrink-0 group-open:rotate-90"
+        size="1em"
+      />
+
+      <div class="grow">
+        <div class="text-foreground truncate font-semibold">{entry.data.title}</div>
+        {entry.data?.description && <div class="text-foreground-subtler">{entry.data.description}</div>}
+        {entry.data?.date && <time class="tabular-nums">{formatDatetime(entry.data.date)}</time>}
+      </div>
+    </SummaryElement>
+    {
+      inline && (
+        <div class="is-inline mt-[1.25em] flex items-start gap-[0.5em]">
+          {inlineAlso && (
+            <a
+              class="touch-hitbox text-accent sticky top-[1.5em] block print:hidden"
+              href={href}
+              title={`Open "${entry.data.title}" in a new tab`}
+              aria-label={`Open "${entry.data.title}" in a new tab`}
+              target="_blank"
+            >
+              <SquareArrowOutUpRight size="1em" />
+            </a>
+          )}
+
+          <span class:list={['w-[1em]', inlineAlso && 'hidden print:block']} />
+
+          <div class="rounded-default w-full border px-[1.5em]">
+            <Content {components} />
+          </div>
+        </div>
+      )
+    }
+  </DetailsElement>
+
+  {!inline && entry.body && <PageLink {entry} />}
+</article>
+
+<script>
+  const details = document.querySelectorAll('details');
+
+  window.addEventListener('beforeprint', () => {
+    details.forEach((detail) => detail.setAttribute('open', ''));
+  });
+
+  window.addEventListener('afterprint', () => {
+    details.forEach((detail) => detail.removeAttribute('open'));
+  });
+</script>

@@ -1,0 +1,64 @@
+---
+import { getCollection, render } from 'astro:content';
+import { getComponents } from '@scripts/getComponents';
+import PageLayout from '@layouts/PageLayout.astro';
+import { formatDatetime } from '@scripts/formatDatetime';
+import { Image } from 'astro:assets';
+
+export async function getStaticPaths() {
+  const staticPaths = [];
+
+  let collection = await getCollection('pages');
+
+  if (import.meta.env.PROD) {
+    collection = collection.filter((entry) => !entry.data?.draft);
+  }
+
+  for (const entry of collection) {
+    if (entry.data.inline === 'only') continue;
+
+    staticPaths.push({
+      params: { page: entry.id === 'index' ? undefined : entry.id },
+      props: { entry },
+    });
+  }
+
+  return staticPaths;
+}
+
+const { entry } = Astro.props;
+
+const { Content } = await render(entry);
+
+const components = getComponents();
+---
+
+<PageLayout metadata={entry.data}>
+  <main class="prose text-default prose-theme my-[4.5em] w-full max-w-none">
+    <header class="not-prose has-[p,time,img]:mb-[3em] has-[p,time,img]:border-b has-[p,time,img]:pb-[1.25em]">
+      <h1 class="text-foreground truncate font-semibold">{entry.data.title}</h1>
+      {entry.data.description && <p class="text-foreground-subtler">{entry.data.description}</p>}
+      {entry.data.date && <time class="tabular-nums">{formatDatetime(entry.data.date)}</time>}
+      {
+        entry.data.image && (
+          <Image
+            class="rounded-default mt-[2em] mb-[0.75em] aspect-video object-cover"
+            src={entry.data.image}
+            alt=""
+            width={864}
+            height={486}
+            format="avif"
+          />
+        )
+      }
+    </header>
+
+    <Content {components} />
+  </main>
+</PageLayout>
+
+<script>
+  import { externalizeLinks } from '@scripts/externalizeLinks';
+
+  externalizeLinks();
+</script>

@@ -1,0 +1,43 @@
+/* https://tailwindcss.com/docs/theme */
+@theme static {
+  --color-accent: light-dark(var(--color-neutral-600), var(--color-neutral-400));
+
+  --color-background-subtle: light-dark(var(--color-neutral-200), var(--color-neutral-800));
+  --color-background: light-dark(var(--color-neutral-100), var(--color-neutral-900));
+
+  --color-border: light-dark(var(--color-neutral-300), var(--color-neutral-700));
+
+  --color-foreground-subtle: light-dark(var(--color-neutral-600), var(--color-neutral-400));
+  --color-foreground-subtler: light-dark(var(--color-neutral-700), var(--color-neutral-300));
+  --color-foreground: light-dark(var(--color-neutral-950), var(--color-neutral-50));
+
+  --font-default: var(--font-sans);
+
+  --radius-default: 0.25rem;
+
+  --spacing-default: 33.75rem;
+
+  --text-default: 0.9375rem;
+}
+
+/* https://github.com/tailwindlabs/tailwindcss-typography#adding-custom-color-themes */
+@utility prose-theme {
+  --tw-prose-body: var(--color-foreground-subtle);
+  --tw-prose-headings: var(--color-foreground);
+  --tw-prose-lead: var(--color-foreground-subtle);
+  --tw-prose-links: var(--color-foreground);
+  --tw-prose-bold: var(--color-foreground);
+  --tw-prose-counters: var(--color-accent);
+  --tw-prose-bullets: var(--color-accent);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-quotes: var(--color-foreground);
+  --tw-prose-quote-borders: var(--color-border);
+  --tw-prose-captions: var(--color-foreground-subtle);
+  --tw-prose-kbd: var(--color-foreground);
+  --tw-prose-kbd-shadows: var(--color-border);
+  --tw-prose-code: var(--color-foreground);
+  --tw-prose-pre-code: var(--color-foreground);
+  --tw-prose-pre-bg: var(--color-background);
+  --tw-prose-th-borders: var(--color-border);
+  --tw-prose-td-borders: var(--color-border);
+}

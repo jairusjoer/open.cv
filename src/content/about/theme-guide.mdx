@@ -1,0 +1,229 @@
+---
+title: 'Theme Guide'
+description: 'Documentation for the open.cv theme'
+date: 2025-12-10
+---
+
+**open.cv** is a document-driven static site theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/), crafted for clarity and purpose.
+
+With a deliberately minimal design, this theme ensures your work remains the focal point. It offers a robust yet flexible foundation for your personal website, portfolio, or blog — honoring a clean aesthetic without sacrificing customization.
+
+---
+
+## Getting Started
+
+To help you get started, here are the essential commands you'll need to develop, build, and maintain your site. These scripts are defined in your `package.json` and streamline your workflow.
+
+| Command            | Description                                       |
+| :----------------- | :------------------------------------------------ |
+| `pnpm dev`         | Start the development server                      |
+| `pnpm build`       | Build the site for production                     |
+| `pnpm preview`     | Preview the built site                            |
+| `pnpm check-types` | Check TypeScript types                            |
+| `pnpm format`      | Format code with [Prettier](https://prettier.io/) |
+| `pnpm lint`        | Lint code with [ESLint](https://eslint.org/)      |
+
+---
+
+## Configuration
+
+The main site configuration is located in `src/config.ts`. This file exports a `site` object that adheres to the `SiteConfig` interface, ensuring type safety and autocompletion. Here you can define global settings such as your site's title, description, and navigation links.
+
+| Property      | Type                                     | Description                                                                               |
+| :------------ | :--------------------------------------- | :---------------------------------------------------------------------------------------- |
+| `site`        | `string`                                 | **Required.** The base URL of the website (e.g., `https://example.com`).                  |
+| `title`       | `string`                                 | **Required.** The title of the website. Used in meta tags and header.                     |
+| `description` | `string`                                 | **Required.** A short description of the website for SEO.                                 |
+| `locale`      | `string`                                 | **Required.** The locale identifier (e.g., `en-US`) for internationalization.             |
+| `datetime`    | `Intl.DateTimeFormatOptions`             | **Required.** Options for formatting dates (e.g., `{ month: 'short', year: 'numeric' }`). |
+| `image`       | `ImageMetadata`                          | Optional. Default image for social sharing (Open Graph/Twitter).                          |
+| `navigation`  | `Array<{ title: string; href: string }>` | Optional. Links for the header navigation. Hidden if empty.                               |
+| `footer`      | `Array<{ title: string; href: string }>` | Optional. Links for the footer. Hidden if empty.                                          |
+
+```typescript
+export const site: SiteConfig = {
+  site: 'https://jairusjoer.com',
+  title: 'open.cv',
+  description: 'Document-driven static site theme',
+  locale: 'en-US',
+  datetime: {
+    month: 'short',
+    year: 'numeric',
+  },
+  footer: [
+    { title: 'Imprint', href: '/imprint' },
+    { title: 'Privacy', href: '/privacy' },
+    { title: 'Source', href: 'https://github.com' },
+  ],
+};
+```
+
+---
+
+## Content Management
+
+Content is the heart of your site. All your pages and posts are stored in `src/content/**`. The theme supports standard Markdown (`.md`), MDX (`.mdx`), and Markdoc (`.mdoc`), giving you the flexibility to write in the format you prefer.
+
+### Frontmatter
+
+Each content file can include frontmatter to define metadata about the page. This metadata is used to generate titles, descriptions, and other page-specific properties.
+
+| Field         | Type                                 | Description                                            |
+| :------------ | :----------------------------------- | :----------------------------------------------------- |
+| `title`       | `string`                             | **Required.** The title of the page.                   |
+| `date`        | `string \| Date \| [string, string]` | Optional. Publication date or date range.              |
+| `description` | `string`                             | Optional. Short description for SEO and lists.         |
+| `draft`       | `boolean`                            | Optional. If `true`, the page is hidden in production. |
+| `image`       | `ImageMetadata`                      | Optional. Image for social sharing and previews.       |
+| `inline`      | `'also' \| 'only'`                   | Optional. Controls inline display behavior.            |
+
+### Inline Content
+
+The `inline` frontmatter property controls how content appears in lists:
+
+- **`undefined`**: **Default.** The content is shown as a link in the list, pointing to its dedicated page.
+- **`inline: 'also'`**: The content is shown inline in the list _and_ has a dedicated page. An external link icon will appear to open the dedicated page.
+- **`inline: 'only'`**: The content is _only_ shown inline in the list. No dedicated page is generated.
+
+### RSS Feed
+
+An RSS feed is automatically generated at `/rss.xml`. It includes all pages except those marked as `draft: true` or `inline: 'only'`.
+
+---
+
+## Components
+
+To make your content more dynamic, the theme includes a set of custom components located in `src/components/content/`. These components are automatically imported via `src/scripts/getComponents.ts`, so you can use them in your MDX files without any manual import statements.
+
+### `<PageList>`
+
+The `<PageList>` component allows you to display a list of pages from your content collection. This is useful for creating index pages, such as a list of blog posts or project examples.
+
+| Prop     | Type     | Description                                      |
+| :------- | :------- | :----------------------------------------------- |
+| `filter` | `string` | Optional. A string to filter pages by ID prefix. |
+
+```astro
+<PageList filter="blog/" />
+```
+
+<PageList filter="examples/" />
+
+### `<PageListItem>`
+
+Sometimes you may want to display a single page entry rather than a list. The `<PageListItem>` component lets you embed a specific page anywhere in your content.
+
+| Prop     | Type     | Description                                                    |
+| :------- | :------- | :------------------------------------------------------------- |
+| `id`     | `string` | **Required.** The ID of the page entry.                        |
+| `inline` | `string` | Optional. Overrides the entry's `inline` frontmatter property. |
+
+```astro
+<PageListItem
+  id="examples/page-only"
+  inline="also"
+/>
+```
+
+<PageListItem
+  id="examples/page-only"
+  inline="also"
+/>
+
+### `<InlineOnly>` & `<PageOnly>`
+
+These utility components allow you to control the visibility of content based on the context. This is particularly useful when you have content that should only appear when viewed in a list (inline) or only when viewing the dedicated page.
+
+```mdx
+<InlineOnly>This content only appears when the entry is viewed inline in a list.</InlineOnly>
+
+<PageOnly>This content only appears when viewing the dedicated page.</PageOnly>
+```
+
+<PageListItem id="examples/inline-also" />
+
+---
+
+## Print Support
+
+In an age of digital consumption, print is often an afterthought. However, open.cv is designed with print in mind. Whether you want to save a recipe, a blog post, or documentation for offline reading, the theme ensures your content looks great on paper.
+
+When printing a page (Cmd/Ctrl + P):
+
+- All inline content (inside `<details>` elements) is automatically expanded so nothing is hidden.
+- Background colors are removed to save ink and improve legibility.
+- The layout is simplified and adjusted specifically for print media.
+
+---
+
+## Theming
+
+Your site should reflect your personality. open.cv makes it easy to customize the look and feel of your site through a powerful theming system based on CSS variables.
+
+### Pre-built Themes
+
+To get you started, the theme comes with three designed themes located in `src/styles/themes/`. You can use these as-is or as a starting point for your own custom theme.
+
+1.  **Aggregata** (`aggregata.css`): A clean, modern theme using Zinc colors and a sans-serif font. Perfect for a post-modern appeal.
+2.  **Catppuccin** (`catppuccin.css`): A soothing pastel theme based on the popular [Catppuccin](https://github.com/catppuccin/catppuccin) color palette (Latte/Mocha). Uses a monospace font for a technical feel.
+3.  **Read** (`read.css`): A minimalist, reading-focused theme using Neutral colors and a serif font. Ideal for long-form content and blogs.
+
+### Switching Themes
+
+Switching between themes is as simple as changing a single line of code. Open `src/styles/tailwind.css` and uncomment the import for the theme you wish to use.
+
+```css
+/* src/styles/tailwind.css */
+
+/* @import './themes/aggregata.css'; */
+@import './themes/catppuccin.css';
+/* @import './themes/read.css'; */
+```
+
+### Customization
+
+If none of the pre-built themes fit your needs, you can easily create your own. Simply add a new CSS file in `src/styles/themes/` (e.g., `my-theme.css`) and import it in `src/styles/tailwind.css`.
+
+A theme file defines a set of CSS variables that control colors, fonts, and spacing. By adjusting these variables, you can completely transform the appearance of your site.
+
+```css
+@theme static {
+  /* Colors */
+  --color-accent: light-dark(#..., #...);
+  --color-background: light-dark(#..., #...);
+  /* ... other colors ... */
+
+  /* Typography */
+  --font-default: var(--font-sans);
+  --text-default: 1rem;
+
+  /* Layout */
+  --radius-default: 0.25rem;
+  --spacing-default: 36rem;
+}
+```
+
+### Syntax Highlighting
+
+For code blocks, open.cv uses [Shiki](https://shiki.style/), a beautiful and powerful syntax highlighter. You can configure the syntax highlighting theme in `astro.config.ts` to match your site's overall aesthetic.
+
+#### Recommended pairings for pre-built themes
+
+To ensure your code blocks look great with your chosen theme, we recommend the following Shiki theme pairings:
+
+| Theme          | Light Mode         | Dark Mode          |
+| :------------- | :----------------- | :----------------- |
+| **Aggregata**  | `github-light`     | `github-dark`      |
+| **Catppuccin** | `catppuccin-latte` | `catppuccin-mocha` |
+| **Read**       | `vitesse-light`    | `vitesse-dark`     |
+
+```typescript
+markdown: {
+  shikiConfig: {
+    themes: {
+      light: 'github-light',
+      dark: 'github-dark',
+    },
+  },
+},
+```
