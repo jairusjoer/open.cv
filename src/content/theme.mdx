@@ -1,7 +1,6 @@
 ---
 title: 'Theme Guide'
-description: 'Documentation for the open.cv theme'
-date: 2025-12-10
+date: 2025-13-01
 ---
 
 **open.cv** is a document-driven static site theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/), crafted for clarity and purpose.
@@ -42,7 +41,7 @@ The main site configuration is located in `src/config.ts`. This file exports a `
 
 ```typescript
 export const site: SiteConfig = {
-  site: 'https://jairusjoer.com',
+  site: 'https://open.cv',
   title: 'open.cv',
   description: 'Document-driven static site theme',
   locale: 'en-US',
@@ -50,11 +49,12 @@ export const site: SiteConfig = {
     month: 'short',
     year: 'numeric',
   },
-  footer: [
-    { title: 'Imprint', href: '/imprint' },
-    { title: 'Privacy', href: '/privacy' },
-    { title: 'Source', href: 'https://github.com' },
+  navigation: [
+    { title: 'About', href: '/' },
+    { title: 'Theme', href: '/theme' },
+    { title: 'Style', href: '/style' },
   ],
+  footer: [{ title: 'Source', href: 'https://github.com/jairusjoer/open.cv' }],
 };
 ```
 
@@ -75,84 +75,31 @@ Each content file can include frontmatter to define metadata about the page. Thi
 | `description` | `string`                             | Optional. Short description for SEO and lists.         |
 | `draft`       | `boolean`                            | Optional. If `true`, the page is hidden in production. |
 | `image`       | `ImageMetadata`                      | Optional. Image for social sharing and previews.       |
-| `inline`      | `'also' \| 'only'`                   | Optional. Controls inline display behavior.            |
-
-### Inline Content
-
-The `inline` frontmatter property controls how content appears in lists:
-
-- **`undefined`**: **Default.** The content is shown as a link in the list, pointing to its dedicated page.
-- **`inline: 'also'`**: The content is shown inline in the list _and_ has a dedicated page. An external link icon will appear to open the dedicated page.
-- **`inline: 'only'`**: The content is _only_ shown inline in the list. No dedicated page is generated.
 
 ### RSS Feed
 
-An RSS feed is automatically generated at `/rss.xml`. It includes all pages except those marked as `draft: true` or `inline: 'only'`.
+An RSS feed is automatically generated at `/rss.xml`. It includes all pages except those marked as `draft: true`.
 
 ---
 
 ## Components
 
-To make your content more dynamic, the theme includes a set of custom components located in `src/components/content/`. These components are automatically imported via `src/scripts/getComponents.ts`, so you can use them in your MDX files without any manual import statements.
+To make your content more dynamic, the theme includes custom components located in `src/components/`. These components are automatically imported via `src/scripts/getComponents.ts`, so you can use them in your MDX files without any manual import statements.
 
-### `<PageList>`
+### Available Components
 
-The `<PageList>` component allows you to display a list of pages from your content collection. This is useful for creating index pages, such as a list of blog posts or project examples.
+The theme provides the following components that are automatically available in your MDX files:
 
-| Prop     | Type     | Description                                      |
-| :------- | :------- | :----------------------------------------------- |
-| `filter` | `string` | Optional. A string to filter pages by ID prefix. |
+- **`<PageList />`**: Display a list of pages from your content collection
+  - Accepts an optional `filter` prop to filter pages by ID prefix
+  - Example: `<PageList filter="blog/" />`
 
-```astro
-<PageList filter="blog/" />
-```
+- **`<PageHeader />`**: Render the site header with title and navigation
+- **`<PageFooter />`**: Render the site footer with configured links
+- **`<PageNavigation />`**: Display navigation links
+- **`<PageMeta />`**: Generate page metadata for SEO
 
-<PageList filter="examples/" />
-
-### `<PageListItem>`
-
-Sometimes you may want to display a single page entry rather than a list. The `<PageListItem>` component lets you embed a specific page anywhere in your content.
-
-| Prop     | Type     | Description                                                    |
-| :------- | :------- | :------------------------------------------------------------- |
-| `id`     | `string` | **Required.** The ID of the page entry.                        |
-| `inline` | `string` | Optional. Overrides the entry's `inline` frontmatter property. |
-
-```astro
-<PageListItem
-  id="examples/page-only"
-  inline="also"
-/>
-```
-
-<PageListItem
-  id="examples/page-only"
-  inline="also"
-/>
-
-### `<InlineOnly>` & `<PageOnly>`
-
-These utility components allow you to control the visibility of content based on the context. This is particularly useful when you have content that should only appear when viewed in a list (inline) or only when viewing the dedicated page.
-
-```mdx
-<InlineOnly>This content only appears when the entry is viewed inline in a list.</InlineOnly>
-
-<PageOnly>This content only appears when viewing the dedicated page.</PageOnly>
-```
-
-<PageListItem id="examples/inline-also" />
-
-### `<Spacer>`
-
-The `<Spacer>` component allows you to add vertical spacing between elements. This is useful for adjusting the layout and rhythm of your content.
-
-| Prop   | Type     | Description                                      |
-| :----- | :------- | :----------------------------------------------- |
-| `size` | `number` | Optional. The size of the spacer. Defaults to 1. |
-
-```astro
-<Spacer size={2} />
-```
+All components are automatically imported via `src/scripts/getComponents.ts`, so you can use them in your MDX files without any manual import statements.
 
 ---
 
@@ -162,7 +109,6 @@ In an age of digital consumption, print is often an afterthought. However, open.
 
 When printing a page (Cmd/Ctrl + P):
 
-- All inline content (inside `<details>` elements) is automatically expanded so nothing is hidden.
 - Background colors are removed to save ink and improve legibility.
 - The layout is simplified and adjusted specifically for print media.
 
@@ -206,7 +152,7 @@ A theme file defines a set of CSS variables that control colors, fonts, and spac
   /* ... other colors ... */
 
   /* Typography */
-  --font-default: var(--font-sans);
+  --font-body: var(--font-sans);
   --text-default: 1rem;
 
   /* Layout */
@@ -233,8 +179,8 @@ To ensure your code blocks look great with your chosen theme, we recommend the f
 markdown: {
   shikiConfig: {
     themes: {
-      light: 'github-light',
       dark: 'github-dark',
+      light: 'github-light',
     },
   },
 },

@@ -52,9 +52,12 @@ Content is the heart of your site. All your pages and posts are stored in `src/c
 To make your content more dynamic, the theme includes a set of custom components:
 
 - `<PageList />`: Display a list of pages from your content collection
-- `<PageListItem />`: Embed a specific page entry individually
-- `<InlineOnly />` & `<PageOnly />`: Control content visibility based on context
-- `<Spacer />`: Add vertical spacing between elements
+- `<PageHeader />`: Render the site header with title and navigation
+- `<PageFooter />`: Render the site footer with configured links
+- `<PageNavigation />`: Display navigation links
+- `<PageMeta />`: Generate page metadata for SEO
+
+These components are automatically available in your MDX files without manual imports.
 
 ## Theming
 

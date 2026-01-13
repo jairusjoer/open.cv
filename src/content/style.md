@@ -1,13 +1,11 @@
 ---
 title: 'Markdown Style Guide'
-date: 2025-12-10
+date: 2025-13-01
 ---
 
-This reference is based on [Adam Pritchard's Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet)
+> This reference is based on [Adam Pritchard's Markdown Cheatsheet](https://github.com/adam-p/markdown-here/wiki/markdown-cheatsheet)
 
 This is intended as a quick reference and showcase. For more complete info, see [John Gruber's original spec](http://daringfireball.net/projects/markdown/) and the [Github-flavored Markdown info page](http://github.github.com/github-flavored-markdown/).
-
-Note that there is also a [Cheatsheet specific to Markdown Here](https://github.com/adam-p/markdown-here/wiki/Markdown-Here-Cheatsheet) if that's what you're looking for. You can also check out [more Markdown tools](https://github.com/adam-p/markdown-here/wiki/Other-Markdown-Tools).
 
 ---
 
@@ -26,6 +24,7 @@ Note that there is also a [Cheatsheet specific to Markdown Here](https://github
 - [Horizontal Rule](#horizontal-rule)
 - [Line Breaks](#line-breaks)
 - [YouTube Videos](#youtube-videos)
+- [Details Element](#details-element)
 
 ---
 
@@ -69,6 +68,8 @@ Strong emphasis, aka bold, with **asterisks** or **underscores**.
 Combined emphasis with **asterisks and _underscores_**.
 
 Strikethrough uses two tildes. ~~Scratch this.~~
+
+Marked text uses the HTML mark tag. <mark>marked text</mark>
 ```
 
 Emphasis, aka italics, with *asterisks* or *underscores*.
@@ -79,25 +80,33 @@ Combined emphasis with **asterisks and *underscores***.
 
 Strikethrough uses two tildes. ~~Scratch this.~~
 
+Marked text uses the HTML mark tag. <mark>marked text</mark>
+
 ---
 
 ## Lists
 
-(In this example, leading and trailing spaces are shown with with dots: ⋅)
-
 ```md
 1. First ordered list item
 2. Another item
-   ⋅⋅⋅⋅\* Unordered sub-list.
+   - Unordered sub-list.
 3. Actual numbers don't matter, just that it's a number
-   ⋅⋅⋅⋅1. Ordered sub-list
+   1. Ordered sub-list
 4. And another item.
 
-⋅⋅⋅You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
+   You can have properly indented paragraphs within list items. Notice the blank line above, and the leading spaces (at least one, but we'll use three here to also align the raw Markdown).
 
-⋅⋅⋅To have a line break without a paragraph, you will need to use two trailing spaces.⋅⋅
-⋅⋅⋅Note that this line is separate, but within the same paragraph.⋅⋅
-⋅⋅⋅(This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
+   To have a line break without a paragraph, you will need to use two trailing spaces.
+   Note that this line is separate, but within the same paragraph.
+   (This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
+
+- Unordered list item
+- Another item
+  - Unordered sub-list.
+- And another item
+
+- [ ] Task list item
+  - [x] Completed task list item
 ```
 
 1. First ordered list item
@@ -114,6 +123,14 @@ Strikethrough uses two tildes. ~~Scratch this.~~
    To have a line break without a paragraph, you will need to use two trailing spaces.
    Note that this line is separate, but within the same paragraph.
    (This is contrary to the typical GFM line break behaviour, where trailing spaces are not required.)
+
+- Unordered list item
+- Another item
+  - Unordered sub-list.
+- And another item
+
+- [ ] Task list item
+  - [x] Completed task list item
 
 ---
 
@@ -135,14 +152,14 @@ There are two ways to create links.
 Or leave it empty and use the [link text itself].
 
 URLs and URLs in angle brackets will automatically get turned into links.
-http://www.example.com or <http://www.example.com> and sometimes
+https://www.example.com or <https://www.example.com> and sometimes
 example.com (but not on Github, for example).
 
 Some text to show that the reference links can follow later.
 
 [arbitrary case-insensitive reference text]: https://www.mozilla.org
-[1]: http://slashdot.org
-[link text itself]: http://www.reddit.com
+[1]: https://slashdot.org
+[link text itself]: https://www.reddit.com
 ```
 
 [I'm an inline-style link](https://www.google.com/)
@@ -153,11 +170,11 @@ Some text to show that the reference links can follow later.
 
 [I'm a relative reference to a repository file](https://github.com/adam-p/markdown-here/blob/master/LICENSE)
 
-[You can use numbers for reference-style link definitions](http://slashdot.org/)
+[You can use numbers for reference-style link definitions](https://slashdot.org/)
 
-Or leave it empty and use the [link text itself](http://www.reddit.com/).
+Or leave it empty and use the [link text itself](https://www.reddit.com/).
 
-URLs and URLs in angle brackets will automatically get turned into links. [http://www.example.com](http://www.example.com/) or [http://www.example.com](http://www.example.com/) and sometimes example.com (but not on Github, for example).
+URLs and URLs in angle brackets will automatically get turned into links. [https://www.example.com](https://www.example.com/) or [https://www.example.com](https://www.example.com/) and sometimes example.com (but not on Github, for example).
 
 Some text to show that the reference links can follow later.
 
@@ -169,19 +186,57 @@ Some text to show that the reference links can follow later.
 Here's our logo (hover to see the title text):
 
 Inline-style:
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png 'Logo Title Text 1')
+![alt text](https://picsum.photos/600/400 'Logo Title Text 1')
 
 Reference-style:
 ![alt text][logo]
 
-[logo]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png 'Logo Title Text 2'
+[logo]: https://picsum.photos/600/400 'Logo Title Text 2'
+
+<picture>
+  <img
+    src="https://picsum.photos/600/400"
+    alt="A random image from picsum.photos"
+  />
+</picture>
+
+<figure>
+  <img
+    src="https://picsum.photos/600/400"
+    alt="A random image from picsum.photos"
+  />
+  <figcaption>Figure 1: A random image from picsum.photos</figcaption>
+</figure>
 ```
 
 Here's our logo (hover to see the title text):
 
-Inline-style: ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png 'Logo Title Text 1')
+Inline-style:
+![alt text](https://picsum.photos/600/400 'Logo Title Text 1')
 
-Reference-style: ![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png 'Logo Title Text 2')
+Reference-style:
+![alt text][logo]
+
+[logo]: https://picsum.photos/600/400 'Logo Title Text 2'
+
+`<picture>` element appearance (if supported by the renderer):
+
+<picture>
+  <img
+    src="https://picsum.photos/600/400"
+    alt="A random image from picsum.photos"
+  />
+</picture>
+
+`figure` and `figcaption` appearance:
+
+<figure>
+  <img
+    src="https://picsum.photos/600/400"
+    alt="A random image from picsum.photos"
+  />
+  <figcaption>Figure 1: A random image from picsum.photos</figcaption>
+</figure>
 
 ---
 
@@ -253,9 +308,21 @@ You can also use words, to fit your writing style more closely[^note].
     This footnote also has been made with a different syntax using 4 spaces for new lines.
 ```
 
-Renders to:
+Here is a simple footnote[^1].
 
-![rendered footnotes](https://user-images.githubusercontent.com/425687/160298620-6046b90e-698c-43cb-8e00-5f5871a906ad.png)
+A footnote can also have multiple lines[^2].
+
+You can also use words, to fit your writing style more closely[^note].
+
+[^1]: My reference.
+
+[^2]:
+    Every new line should be prefixed with 2 spaces.
+    This allows you to have a footnote with multiple lines.
+
+[^note]:
+    Named footnotes will still render with numbers instead of the text but allow easier identification and linking.
+    This footnote also has been made with a different syntax using 4 spaces for new lines.
 
 ---
 
@@ -376,22 +443,41 @@ They can't be added directly but you can add an image with a link to the video l
 
 ```html
 <a
-  href="http://www.youtube.com/watch?feature=player_embedded&v=YOUTUBE_VIDEO_ID_HERE
-"
+  href="https://www.youtube.com/watch?feature=player_embedded&v=dQw4w9WgXcQ"
   target="_blank"
-  ><img
-    src="http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg"
-    alt="IMAGE ALT TEXT HERE"
+>
+  <img
+    src="https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg"
+    alt="Rick Roll"
     width="240"
     height="180"
     border="10"
-/></a>
+  />
+</a>
 ```
 
 Or, in pure Markdown, but losing the image sizing and border:
 
 ```md
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID_HERE)
+[![Rick Roll](https://img.youtube.com/vi/dQw4w9WgXcQ/0.jpg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 ```
 
-Referencing a bug by #bugID in your git commit links it to the slip. For example #1.
+Referencing a bug by #bugID in your git commit links it to the issue. For example #1.
+
+---
+
+## Details Element
+
+You can use the HTML `<details>` element to create collapsible sections.
+
+```html
+<details>
+  <summary>Click to expand!</summary>
+  This content is hidden until the user clicks "Click to expand!".
+</details>
+```
+
+<details>
+  <summary>Click to expand!</summary>
+  My basic recommendation for learning how line breaks work is to experiment and discover -- hit [Enter] once (i.e., insert one newline), then hit it twice (i.e., insert two newlines), see what happens. You'll soon learn to get what you want. "Markdown Toggle" is your friend.
+</details>

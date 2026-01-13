@@ -1,6 +1,6 @@
 ---
+import { formatDatetime } from '@scripts/formatDatetime';
 import { getCollection } from 'astro:content';
-import PageListItem from './PageListItem.astro';
 
 export interface Props {
   filter?: string;
@@ -29,6 +29,22 @@ if (import.meta.env.PROD) {
 }
 ---
 
-<div class="my-[1.25em]">
-  {collection.map((entry) => <PageListItem id={entry.id} />)}
-</div>
+<ul>
+  {
+    collection.map((entry) => (
+      <li>
+        <article>
+          <a href={entry.id}>
+            <strong>{entry.data.title}</strong>
+          </a>
+          {entry.data.date && (
+            <>
+              <br />
+              <time>{formatDatetime(entry.data.date)}</time>
+            </>
+          )}
+        </article>
+      </li>
+    ))
+  }
+</ul>

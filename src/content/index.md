@@ -8,6 +8,8 @@ With a deliberately minimal design, this theme ensures your work remains the foc
 
 ---
 
+## Features
+
 - **Document-Driven**: Write in Markdown, MDX, or Markdoc
 - **Theming**: Built-in themes and customization via CSS variables
 - **Print Friendly**: Optimized appearance for web to print
@@ -16,4 +18,9 @@ With a deliberately minimal design, this theme ensures your work remains the foc
 
 ---
 
-<PageList filter="about" />
+## Getting Started
+
+Explore the theme documentation to learn how to configure and customize your site:
+
+- [**Theme Guide**](/theme) — Configuration, components, and theming
+- [**Style Guide**](/style) — Markdown formatting reference and examples

@@ -1,5 +1,5 @@
 ---
-import type { SiteConfigLink } from '../../types';
+import type { SiteConfigLink } from '../types';
 
 export interface Props {
   links?: Array<SiteConfigLink>;
@@ -24,7 +24,7 @@ const active = (path: string) => {
           <li>
             <a
               class:list={[
-                'touch-hitbox rounded-default bg-background-subtle block px-[0.5em]',
+                'rounded-default bg-background-subtle block px-[0.5em]',
                 active(link.href) && 'bg-accent! text-background!',
               ]}
               href={link.href}

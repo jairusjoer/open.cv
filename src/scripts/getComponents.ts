@@ -1,4 +1,4 @@
-const contentComponents = import.meta.glob<{ default: object }>('/src/components/content/**/*', { eager: true });
+const contentComponents = import.meta.glob<{ default: object }>('/src/components/**/*', { eager: true });
 
 const mapped = Object.fromEntries(
   Object.entries(contentComponents).map(([path, component]) => {

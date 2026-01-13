@@ -8,12 +8,11 @@ const pages = defineCollection({
   }),
   schema: ({ image }) =>
     z.object({
-      date: z.union([z.string(), z.date(), z.array(z.string()).length(2)]).optional(),
+      date: z.date().optional(),
       description: z.string().max(300).optional(),
       draft: z.boolean().optional(),
       image: image().optional(),
       title: z.string().max(150),
-      inline: z.enum(['also', 'only']).optional(),
     }),
 });
 

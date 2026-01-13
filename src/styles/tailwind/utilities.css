@@ -15,19 +15,3 @@
     z-index: 999;
   }
 }
-
-@utility inline-only {
-  display: none;
-
-  .is-inline & {
-    display: contents;
-  }
-}
-
-@utility page-only {
-  display: contents;
-
-  .is-inline & {
-    display: none;
-  }
-}

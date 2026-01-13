@@ -14,8 +14,6 @@ export const GET: APIRoute = async () => {
   const entries = [];
 
   for (const entry of collection) {
-    if (entry.data.inline === 'only') continue;
-
     const item = {
       title: entry.data.title,
       description: entry.data.description,

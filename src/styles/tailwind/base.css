@@ -27,83 +27,17 @@
     }
   }
 
-  a[href^='http']::after {
-    content: ' ↗';
+  a {
+    @apply touch-hitbox;
+
+    &[href^='http']::after {
+      content: ' ↗';
+    }
   }
 
   html {
     scrollbar-gutter: stable;
     scroll-behavior: smooth;
     text-wrap: pretty;
-  }
-
-  .prose {
-    figure,
-    img,
-    pre:has(code) {
-      break-inside: avoid;
-    }
-
-    a {
-      text-decoration: underline var(--color-border) !important;
-
-      &[data-footnote-backref] {
-        font-family: ui-sans-serif, system-ui, sans-serif;
-      }
-    }
-
-    input {
-      &[type='checkbox'] {
-        accent-color: var(--color-accent);
-        appearance: none;
-        border-radius: var(--radius-default);
-        border: 0.0625rem solid var(--color-border);
-        height: 1em;
-        position: absolute;
-        left: -1.25em;
-        top: 0.375em;
-        margin-right: 0.625em;
-        width: 1em;
-
-        &:checked {
-          background: var(--color-background-subtle);
-
-          &::after {
-            color: var(--color-accent);
-            content: '✓';
-            font-size: 0.75em;
-            font-weight: 500;
-            left: 50%;
-            position: absolute;
-            top: 50%;
-            translate: -50% -50%;
-          }
-        }
-      }
-    }
-
-    mark {
-      background-color: var(--color-accent);
-    }
-
-    pre:has(code) {
-      border-radius: var(--radius-default) !important;
-
-      @media print {
-        border: 0.0625rem solid var(--color-border);
-      }
-    }
-
-    ul:has(input[type='checkbox']) {
-      list-style-type: none !important;
-
-      li {
-        position: relative;
-      }
-    }
-
-    video {
-      border-radius: var(--radius-default);
-    }
   }
 }
